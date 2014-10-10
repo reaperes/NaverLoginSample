@@ -28,15 +28,17 @@ app.use(function(req, res, next) {
 app.get('/', function(req, res) {
   var session = req.session;
 
-  // if user logged in
+  // if user already logged in
   if (session.code)
-    res.render('login_main.html', {code: session.code});
-  else {
-    // if loggin success
-    if (session.state == req.query.state)
-      session.code = req.query.code;
-    res.render('main.html', {code: session.code});
+    return res.render('login_main.html', {code: session.code});
+
+  // if loggin success
+  if (session.state == req.query.state) {
+    session.code = req.query.code;
+    return res.render('login_main.html', {code: session.code});
   }
+  else
+    res.render('main.html', {code: session.code});
 });
 
 app.get('/state', function(req, res) {

@@ -49,21 +49,12 @@
   }
 
   function requestNaverLogin(callback, state) {
-//    var request = new XMLHttpRequest();
     var url = 'https://nid.naver.com/oauth2.0/authorize?'
               + 'client_id=dUbAto1L_NOY40kjXmks&'
               + 'response_type=code&'
-              + 'redirect_uri=www.recover39.com&'
+              + 'redirect_uri=login.pangyo.info&'
               + 'state=' + state;
     window.open(url);
-//    request.open('GET', url, true);
-//    request.onreadystatechange = function() {
-//      if (request.readyState == 4 && request.status == 200) {
-//        var response = request.responseText;
-//        alert(response);
-//      }
-//    };
-//    request.send();
   }
 
   function changeCursor(style) {

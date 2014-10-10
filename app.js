@@ -35,8 +35,6 @@ app.get('/', function(req, res) {
     // if loggin success
     if (session.state == req.query.state)
       session.code = req.query.code;
-    else
-      session.code = 'You may be a hacker';
     res.render('main.html', {code: session.code});
   }
 });

@@ -30,12 +30,12 @@ app.get('/', function(req, res) {
 
   // if user already logged in
   if (session.code != undefined)
-    return res.render('login_main.html', {code: session.code});
+    return res.render('login_main.html', {code: 1});
 
   // if loggin success
   if (session.state == req.query.state) {
     session.code = req.query.code;
-    return res.render('login_main.html', {code: session.code});
+    return res.render('login_main.html', {code: 2});
   }
   else
     res.render('main.html', {code: session.code});

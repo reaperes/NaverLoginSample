@@ -49,12 +49,11 @@
   }
 
   function requestNaverLogin(callback, state) {
-    var url = 'https://nid.naver.com/oauth2.0/authorize?'
-              + 'client_id=dUbAto1L_NOY40kjXmks&'
-              + 'response_type=code&'
-              + 'redirect_uri=http://login.pangyo.info&'
-              + 'state=' + state;
-    window.location(url);
+    window.location = 'https://nid.naver.com/oauth2.0/authorize?'
+                      + 'client_id=dUbAto1L_NOY40kjXmks&'
+                      + 'response_type=code&'
+                      + 'redirect_uri=http://login.pangyo.info&'
+                      + 'state=' + state;
   }
 
   function changeCursor(style) {

@@ -29,13 +29,13 @@ app.get('/', function(req, res) {
   var session = req.session;
 
   // if user already logged in
-  if (session.code != undefined)
-    return res.render('login_main.html', {code: 1});
+  if (session.code)
+    return res.render('login_main.html', {code: session.code});
 
   // if loggin success
-  if (session.state == req.query.state) {
+  if (session.state != undefined && session.state == req.query.state) {
     session.code = req.query.code;
-    return res.render('login_main.html', {code: 2});
+    return res.render('login_main.html', {code: session.code});
   }
   else
     res.render('main.html', {code: session.code});

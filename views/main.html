@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Naver login api sample</title>
+  </head>
+<body style="background:#d2d2d2;position:relative;margin:0;overflow:hidden;" onload="var s=document.body.style;s.width=window.innerWidth+'px';s.height=window.innerHeight+'px';" onresize="">
+<a id="login" href="#" style="display:block;width:236px;height:50px;margin:40px;">
+  <img src="images/naver_login.png" style="width:236px;height:50px;"/>
+</a>
+<script>
+  var asyncSeries = function (tasks) {
+    var i = 0, l = tasks.length;
+    (function next(args) {
+      if (i < l) tasks[i++](next, args);
+    })();
+  };
+</script>
+<script>
+  var buttonPressed = false;
+  var login = document.getElementById('login');
+  login.addEventListener('click', function () {
+    if (buttonPressed) return;
+    buttonPressed = true;
+
+    changeCursor('wait');
+
+    asyncSeries([
+      requestState,
+      requestNaverLogin
+    ])
+  });
+
+  function requestState(callback) {
+    var request = new XMLHttpRequest();
+    request.open('GET', 'http://localhost:3000/state', true);
+    request.onreadystatechange = function() {
+      if (request.readyState == 4) {
+        if (request.status == 200) {
+          var state = request.responseText;
+          callback(state);
+        }
+        else {
+          console.error('status : ' + request.status);
+        }
+      }
+    };
+    request.send();
+  }
+
+  function requestNaverLogin(callback, state) {
+//    var request = new XMLHttpRequest();
+    var url = 'https://nid.naver.com/oauth2.0/authorize?'
+              + 'client_id=dUbAto1L_NOY40kjXmks&'
+              + 'response_type=code&'
+              + 'redirect_uri=www.recover39.com&'
+              + 'state=' + state;
+    window.open(url);
+//    request.open('GET', url, true);
+//    request.onreadystatechange = function() {
+//      if (request.readyState == 4 && request.status == 200) {
+//        var response = request.responseText;
+//        alert(response);
+//      }
+//    };
+//    request.send();
+  }
+
+  function changeCursor(style) {
+    login.style.cursor=style;
+  }
+</script>
+</body>
+</html>

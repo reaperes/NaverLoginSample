@@ -18,11 +18,7 @@ app.use(function(req, res, next) {
 });
 
 app.get('/', function(req, res) {
-  res.render('main.html');
-});
-
-app.get('/redirect', function(req, res) {
-  res.render('redirect_main.html');
+  res.render('main.html', {code:req.query.code, state:req.query.state});
 });
 
 app.get('/state', function(req, res) {

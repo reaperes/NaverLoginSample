@@ -29,7 +29,7 @@ app.get('/', function(req, res) {
   var session = req.session;
 
   // if user already logged in
-  if (session.code)
+  if (session.code != undefined)
     return res.render('login_main.html', {code: session.code});
 
   // if loggin success

@@ -1,9 +1,17 @@
 var express = require('express');
+var session = require('express-session');
 var path = require('path');
 var bodyParser = require('body-parser');
 var crypto = require('crypto');
 
 var app = express();
+
+app.use(session({
+  secret: 'secr3t',
+  cookie: {maxAge: 60000},
+  resave: true,
+  saveUninitialized: true
+}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -18,11 +26,25 @@ app.use(function(req, res, next) {
 });
 
 app.get('/', function(req, res) {
-  res.render('main.html', {code:req.query.code, state:req.query.state});
+  var session = req.session;
+
+  // if user logged in
+  if (session.code)
+    res.render('login_main.html', {code: session.code});
+  else {
+    // if loggin success
+    if (session.state == req.query.state)
+      session.code = req.query.code;
+    else
+      session.code = 'You may be a hacker';
+  }
+  res.render('main.html', {code: session.code});
 });
 
 app.get('/state', function(req, res) {
-  res.status(200).send(generateState());
+  var state = generateState();
+  req.session.state = state;
+  res.status(200).send(state);
 
   function generateState() {
     return crypto.randomBytes(16).toString('hex')

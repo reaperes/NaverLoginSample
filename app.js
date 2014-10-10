@@ -37,8 +37,8 @@ app.get('/', function(req, res) {
       session.code = req.query.code;
     else
       session.code = 'You may be a hacker';
+    res.render('main.html', {code: session.code});
   }
-  res.render('main.html', {code: session.code});
 });
 
 app.get('/state', function(req, res) {

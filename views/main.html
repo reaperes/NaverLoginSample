@@ -33,7 +33,7 @@
 
   function requestState(callback) {
     var request = new XMLHttpRequest();
-    request.open('GET', 'http://localhost:3000/state', true);
+    request.open('GET', 'http://login.pangyo.info/state', true);
     request.onreadystatechange = function() {
       if (request.readyState == 4) {
         if (request.status == 200) {
